@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+  frontend-proxy:
+    build:
+      context: ./frontend-proxy
+    environment:
+      LISTEN_PORT: 90
+      SERVICE_DISCOVERY_ADDRESS: service
+      SERVICE_DISCOVERY_PORT: 90
+    ports:
+      - "9090:90"
+
+  service-1:
+    build:
+      context: ./service
+    expose:
+      - 9090
+
+  sidecar-1:
+    build:
+      context: ./sidecar
+    environment:
+      LISTEN_PORT: 90
+      SERVICE_ADDRESS: service-1
+      SERVICE_PORT: 9090
+    networks:
+      default:
+        aliases:
+          - service
+    expose:
+      - 90
+
+  service-2:
+    build:
+      context: ./service
+    expose:
+      - 9090
+
+  sidecar-2:
+    build:
+      context: ./sidecar
+    environment:
+      LISTEN_PORT: 90
+      SERVICE_ADDRESS: service-2
+      SERVICE_PORT: 9090
+    networks:
+      default:
+        aliases:
+          - service
+    expose:
+      - 90

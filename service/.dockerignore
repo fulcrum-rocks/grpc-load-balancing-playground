@@ -1,0 +1,6 @@
+*
+!proto
+!src
+!package*.json
+!nes-cli.json
+!tsconfig*.json

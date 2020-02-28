@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package service;
+
+service Sample { rpc Echo(EchoRequest) returns (EchoResponse); }
+
+message EchoRequest { string str = 1; }
+
+message EchoResponse {
+  string str = 1;
+  int32 counter = 2;
+}
